@@ -1,0 +1,26 @@
+
+python-dotenv==1.0.0
+
+# tokens and vector dbs
+pymilvus
+
+#api
+fastapi
+uvicorn[standard]
+
+#db
+redis
+
+#AI
+openai==0.27.8
+langchain==0.0.218
+
+# docs
+PyPDF2==3.0.1
+pypdf
+python-multipart
+python-docx
+docx2pdf
+unstructured
+python-pptx
+openpyxl

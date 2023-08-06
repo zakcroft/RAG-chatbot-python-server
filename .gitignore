@@ -1,0 +1,10 @@
+# Environments
+.env
+venv
+.venv
+
+files
+**/__pycache__
+.idea
+.DS_Store
+

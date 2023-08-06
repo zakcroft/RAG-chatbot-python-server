@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+
+  server:
+    build: .
+    container_name: 'chatbot-python-server'
+    command: uvicorn api:app --host 0.0.0.0 --port 80 --reload
+    ports:
+      - "80:80"
+    env_file:
+      - ./.env
+
+
+volumes:
+   redis_data:
+
