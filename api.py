@@ -12,7 +12,7 @@ from pydantic import BaseModel
 from fastapi import FastAPI, UploadFile, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from vector_dbs.milvus import save_docs_to_vector_store, has_collection
-from chat_store.db import db_get_conversation, db_create_conversation
+from chat_store.db import db_get_conversation, db_create_conversation, db_delete_conversation
 
 from documents.document_loader import store_and_split_file
 from open_ai import streaming_callback, get_open_ai_assistant
@@ -64,6 +64,11 @@ async def query(req: Query):
     assistant = await get_open_ai_assistant()
     if assistant is None:
         raise HTTPException(status_code=503, detail="Failed to get OpenAI assistant")
+
+@app.delete("/delete-conversation-history/{key}")
+async def delete_conversation_history(key: str):
+    result = await db_delete_conversation(key)
+    return {"results": result}
 
     conversation_key = req.user_id + ':' + req.conversation_id
     if not has_collection():

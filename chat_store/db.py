@@ -57,3 +57,12 @@ async def db_create_conversation(user_id: str, conversation_id: str):
         if len(history.messages) == 0:
             history.add_ai_message("Good day How can I help you today")
         return await db_get_conversation(conversation_key)
+
+async def db_delete_conversation(conversation_key: str):
+    logger.info(f"Deleting conversation history for id {conversation_key}")
+    redis_instance = get_redis()
+    result = redis_instance.delete(conversation_key)
+    if result == 1:
+        return {"success": f"Conversation with {conversation_key} deleted successfully"}
+    else:
+        return {"error": f"Conversation with {conversation_key} does not exist"}
